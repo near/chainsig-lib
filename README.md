@@ -6,6 +6,14 @@
 
 - fill in the method signatures
 
+## Goals
+
+- TODO
+
+## Contributions
+
+- TODO
+
 # Overview
 
 NEAR's Chain Signatures protocol allows any NEAR account to sign transactions for any chain. The signing step is a method call with signature:
@@ -123,9 +131,10 @@ For smart contract chains, additional methods are available:
 5. call (async)
 6. view (async)
 
-# Contributions
+### Additional chain specific methods (future work):
 
-Please file an issue or PR proposing your changes to proposed library spec.
+- Cosmos - IBC
+- Dfinity - Canisters
 
 # References & Useful Links
 
@@ -164,7 +173,3 @@ Please file an issue or PR proposing your changes to proposed library spec.
 [XRP Ledger Testnet Faucet](https://test.bithomp.com/faucet/)
 
 [XRP Ledger Testnet Explorer](https://test.bithomp.com/explorer)
-
-```
-
-```
