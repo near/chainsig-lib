@@ -42,7 +42,7 @@ import { near, bitcoin, ethereum } from '@near/chain-sig-lib';
 // initialize a NEAR connection, if you don't already have one in your client, this can be useful for testing
 const nearConnection = near.init(network, [accountId], [accountSecretKey]);
 // initialize the bitcoin module for use with the current NEAR connection (this can be your existing NEAR connection e.g. from wallet-selector)
-bitcoin.init(path, key_version, [nearConnection]);
+bitcoin.init(path, keyVersion, [nearConnection]);
 // get the balance of bitcoin for the currently initialized derived address created by NEAR accountId, path, key_version
 // optional argument: minusGas of a basic transfer
 const balance = bitcoin.getBalance([minusGas]);
@@ -51,11 +51,11 @@ const balance = bitcoin.getBalance([minusGas]);
 ...
 
 // get a bitcoin transfer payload (amount is in sats)
-const payload = bitcoin.transferPayload(to, amount, [maxUTXOs]);
+const baseTransaction = bitcoin.transferBase(to, amount, [maxUTXOs]);
 // sign the bitcoin payload - creates a NEAR transaction using either wallet or secretKey if passed to near.init
-const signedPayload = bitcoin.signPayload(payload);
+const [signedTransaction] = bitcoin.sign([baseTransaction]);
 // broadcast the bitcoin transaction
-const txHash = await bitcoin.broadcast(signedPayload, network);
+const txHash = await bitcoin.broadcast([signedTransaction], network);
 ```
 
 ### Shorthand
@@ -78,15 +78,19 @@ import { near, ... } from '@near/chain-sig-lib';
 // your code to create, sign and broadcast a transaction
 ...
 // after web wallet redirect to your application e.g. typically in a useEffect hook in React
-const { txHashes, errors } = near.getResults();
+const { errors, [txHashes], [signedTransactions] } = near.getResults();
 ```
 
 ### Smart contract methods
 
 Smart contract chains (EVM and others) will typically have 1 state manipulating call, requiring gas to be spent and one view call. In order to encapsulte this and make it easier, there are some higher order methods, built on top of lower level primatives.
 
+# TODO - UPDATE FOR ARRAY OF BASE TRANSACTIONS
+
 ```js
 // viewing contract state
+
+// TODO UPDATE
 
 const payload = ethereum.viewPaylod(to, method, args);
 // or the shorthand to sign with NEAR account and broadcast all together
@@ -109,15 +113,56 @@ const txHash = await ethereum.call(to, method, args, network);
 
 For all chains, the following methods are available:
 
-1. getAddress
-2. getGas
-3. getBalance
-4. transferPayload
-5. broadcast (async)
+```js
+// initializes the chain instance
+// if you need to use multiple paths, call again and it will overwrite the current settings with a new path for example
+[chainInstance].init(path, keyVersion, [nearConnection]);
 
-   and the shorthand:
+// get the address for the current chain instance settings
+// derived address == nearAccountId x path x keyVersion
+// @returns string - hex/base58/... address depends on chain
+getAddress();
 
-6. transfer (async)
+// @async
+// get a gas price estimate for the current chain
+// @returns - object - values are chain dependent
+getGas();
+
+// @async
+// get the balance of the derived address in the chain's native currency
+// @returns {Object} balance - values are chain dependent
+getBalance();
+
+// get a base transaction to transfer the chain's native currency
+// @param [option, ...] - chain specific options e.g. maxUTXOs for Bitcoin
+// @returns object baseTransaction
+transferBase(to, amount, [option, ...]);
+
+// @async
+// sign the base transaction prompting the user to sign a NEAR transaction
+// @param {Object} baseTransactions - array of base transactions
+// @returns {Object[]} signedTransactions - signed transactions as array
+sign(baseTransactions);
+
+// @async
+// broadcast the transaction to the network specified
+// @param {Object} signedTransactions
+// @param {string} network - name of network to broadcast to
+// @returns {string[]} txHash
+broadcast(signedTransactions, network);
+
+// @async
+// shorthand to skip the above three methods
+// will prompt user to sign the NEAR transaction
+// @returns {string[]} txHash
+transfer(to, amount, network, [option, ...])
+
+// @async
+// if the user was redirect to a web wallet, get the results once returned to the application e.g. in useEffect hook when React component for chain signatures loads
+// requires the top level near import from library
+// @returns {Object} results - { errors, [txHashes], [signedTransactions] }
+near.getResults();
+```
 
 For smart contract chains, additional methods are available:
 
