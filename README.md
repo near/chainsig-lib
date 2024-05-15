@@ -2,15 +2,16 @@
 
 # For RFC Skip Overview
 
-## WIP - TODO
+## TODO
 
-- fill in the method signatures
+- Goals
+- Contribution Guidelines
 
 ## Goals
 
 - TODO
 
-## Contributions
+## Contribution Guidelines
 
 - TODO
 
@@ -51,7 +52,7 @@ const balance = bitcoin.getBalance([minusGas]);
 ...
 
 // get a bitcoin transfer payload (amount is in sats)
-const baseTransaction = bitcoin.transferBase(to, amount, [maxUTXOs]);
+const baseTransaction = bitcoin.transferBase(to: string, amount, [maxUTXOs]);
 // sign the bitcoin payload - creates a NEAR transaction using either wallet or secretKey if passed to near.init
 const [signedTransaction] = bitcoin.sign([baseTransaction]);
 // broadcast the bitcoin transaction
@@ -66,7 +67,7 @@ Additionally, the above call to `transferPayload` will also throw an error befor
 
 ```js
 // optional shorthand for the last 3 steps
-const txHash = await bitcoin.transfer(to, amount, network, [maxUTXOs]);
+const txHash = await bitcoin.transfer(to: string, amount, network, [maxUTXOs]);
 ```
 
 ### Using with a web wallet
@@ -85,16 +86,14 @@ const { errors, [txHashes], [signedTransactions] } = near.getResults();
 
 Smart contract chains (EVM and others) will typically have 1 state manipulating call, requiring gas to be spent and one view call. In order to encapsulte this and make it easier, there are some higher order methods, built on top of lower level primatives.
 
-# TODO - UPDATE FOR ARRAY OF BASE TRANSACTIONS
-
 ```js
 // viewing contract state
 
 // TODO UPDATE
 
-const payload = ethereum.viewPaylod(to, method, args);
+const payload = ethereum.viewBase(to: string, method, args);
 // or the shorthand to sign with NEAR account and broadcast all together
-const txHash = await ethereum.view(to, method, args, network);
+const txHash = await ethereum.view(to: string, method, args, network);
 
 // changing contract state
 
@@ -104,9 +103,9 @@ const balance = await ethereum.getBalance([minusGas, rawTx]);
 // optional check if balance is negative, meaning callPayload (and call) will throw errors
 ...
 
-const payload = ethereum.callPayload(to, method, args);
+const payload = ethereum.callBase(to: string, method, args);
 // or the shorthand to sign with NEAR account and broadcast all together
-const txHash = await ethereum.call(to, method, args, network);
+const txHash = await ethereum.call(to: string, method, args, network);
 ```
 
 ## Methods
@@ -116,7 +115,7 @@ For all chains, the following methods are available:
 ```js
 // initializes the chain instance
 // if you need to use multiple paths, call again and it will overwrite the current settings with a new path for example
-[chainInstance].init(path, keyVersion, [nearConnection]);
+[chainInstance].init(path: string, keyVersion: uint, [nearConnection: object]);
 
 // get the address for the current chain instance settings
 // derived address == nearAccountId x path x keyVersion
@@ -130,51 +129,66 @@ getGas();
 
 // @async
 // get the balance of the derived address in the chain's native currency
-// @returns {Object} balance - values are chain dependent
+// @returns {object} balance - values are chain dependent
 getBalance();
 
 // get a base transaction to transfer the chain's native currency
 // @param [option, ...] - chain specific options e.g. maxUTXOs for Bitcoin
 // @returns object baseTransaction
-transferBase(to, amount, [option, ...]);
+transferBase(to: string, amount: string, [option, ...]);
 
 // @async
 // sign the base transaction prompting the user to sign a NEAR transaction
-// @param {Object} baseTransactions - array of base transactions
-// @returns {Object[]} signedTransactions - signed transactions as array
-sign(baseTransactions);
+// @param {object} baseTransactions - array of base transactions
+// @returns {object[]} signedTransactions - signed transactions as array
+sign(baseTransactions: object[]);
 
 // @async
 // broadcast the transaction to the network specified
-// @param {Object} signedTransactions
+// @param {object[]} signedTransactions
 // @param {string} network - name of network to broadcast to
 // @returns {string[]} txHash
-broadcast(signedTransactions, network);
+broadcast(signedTransactions: object[], network: string);
 
 // @async
 // shorthand to skip the above three methods
 // will prompt user to sign the NEAR transaction
 // @returns {string[]} txHash
-transfer(to, amount, network, [option, ...])
+transfer(to: string, amount, network, [option, ...])
 
 // @async
 // if the user was redirect to a web wallet, get the results once returned to the application e.g. in useEffect hook when React component for chain signatures loads
 // requires the top level near import from library
-// @returns {Object} results - { errors, [txHashes], [signedTransactions] }
+// @returns {object} results - { errors, [txHashes], [signedTransactions] }
 near.getResults();
 ```
 
 For smart contract chains, additional methods are available:
 
-1. deployContractPayload - because of large bytes this is different from basic call
-2. callPayload - change state of contract via method call
-3. viewPayload - view state via method call
+```js
+// because of the large number of bytes this is a special base transaction for deploying smart contracts
+// @returns object baseTransaction
+deployContractBase(bytes: string)
 
-   and the additional shorthands:
+// call a method of a smart contract
+// @returns object baseTransaction
+callBase(to: string, methodName: string, args: object)
 
-4. deployContract (async)
-5. call (async)
-6. view (async)
+// view the result of a method call to a contract
+// @returns object baseTransaction
+viewBase(to: string, methodName: string, args: object)
+
+// and the shorthands
+
+// @async
+deployContract(bytes: string, network: string)
+
+// @async
+call (to: string, methodName: string, args: object, network: string)
+
+// @async
+view (to: string, methodName: string, args: object, network: string)
+```
 
 ### Additional chain specific methods (future work):
 
