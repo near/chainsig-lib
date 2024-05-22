@@ -2,18 +2,16 @@
 
 # For RFC Skip Overview
 
-## TODO
-
-- Goals
-- Contribution Guidelines
-
-## Goals
-
-- TODO
+A library that provides a suite of methods to easily interact with specific chains from NEAR.
 
 ## Contribution Guidelines
 
-- TODO
+If you would like to contribute a new chain to this libary to this libray please:
+- Create a new folder titled the chain name for example "Ethereum" in the chains folder.
+- Implement all methods as defined in this README.
+- Follow the Ethereum example.
+
+Currently this can be implemented for any ECDSA based chain. 
 
 # Overview
 
