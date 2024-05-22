@@ -6,12 +6,12 @@ A library that provides a suite of methods to easily interact with specific chai
 
 ## Contribution Guidelines
 
-If you would like to contribute a new chain to this libary please:
+If you would like to contribute a new chain to this library please:
 - Create a new folder titled the chain name for example "Ethereum" in the chains folder.
 - Implement all methods as defined in this README.
 - Follow the Ethereum example.
 
-Currently this can be implemented for any ECDSA based chain. 
+Currently, this can be implemented for any ECDSA-based chain. 
 
 # Overview
 
