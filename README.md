@@ -201,7 +201,7 @@ view (to: string, methodName: string, args: object, network: string)
 
 [Live Example - NEAR Testnet, Sepolia, Bitcoin Testnet](https://test.near.social/md1.testnet/widget/chainsig-sign-eth-tx)
 
-[A frontend example you can run locally](https://github.com/gagdiez/near-multichain)
+[A frontend example you can run locally](https://github.com/near-examples/near-multichain)
 
 ### Docs
 
