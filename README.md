@@ -41,7 +41,7 @@ For a full list of methods, see Methods section below. The following section des
 import { near, bitcoin, ethereum } from '@near/chain-sig-lib';
 
 // initialize a NEAR connection, if you don't already have one in your client, this can be useful for testing
-const nearConnection = near.init(network, [accountId], [accountSecretKey]);
+const nearConnection = near.init(network: string, [accountId], [accountSecretKey]);
 // initialize the bitcoin module for use with the current NEAR connection (this can be your existing NEAR connection e.g. from wallet-selector)
 bitcoin.init(path, keyVersion, [nearConnection]);
 // get the balance of bitcoin for the currently initialized derived address created by NEAR accountId, path, key_version
@@ -67,7 +67,7 @@ Additionally, the above call to `transferPayload` will also throw an error befor
 
 ```js
 // optional shorthand for the last 3 steps
-const txHash = await bitcoin.transfer(to: string, amount, network, [maxUTXOs]);
+const txHash = await bitcoin.transfer(to: string, amount, network: string, [maxUTXOs]);
 ```
 
 ### Using with a web wallet
@@ -154,7 +154,7 @@ broadcast(signedTransactions: object[], network: string);
 // shorthand to skip the above three methods
 // will prompt user to sign the NEAR transaction
 // @returns {string[]} txHash
-transfer(to: string, amount, network, [option, ...])
+transfer(to: string, amount: string, network: string, [option: object, ...])
 
 // @async
 // if the user was redirect to a web wallet, get the results once returned to the application e.g. in useEffect hook when React component for chain signatures loads
