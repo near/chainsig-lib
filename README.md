@@ -1,19 +1,19 @@
 ### ⚠️⚠️⚠️ Caution! This is beta / testnet technology ⚠️⚠️⚠️
 
-# For RFC Skip Overview
+# Goals
 
-## TODO
-
-- Goals
-- Contribution Guidelines
-
-## Goals
-
-- TODO
+1. Developers will be able to create transactions for different chains using the same high level API methods.
+2. The signing of transactions using NEAR's Chain Signatures protocol is abstracted and works with Node/Browser.
 
 ## Contribution Guidelines
 
-- TODO
+If you would like to contribute a new chain to this library please:
+
+- Create a new folder titled the chain name for example "Ethereum" in the chains folder.
+- Implement all methods as defined in this README.
+- Follow the Ethereum example.
+
+Currently, this can be implemented for any ECDSA-based chain.
 
 # Overview
 
@@ -201,7 +201,7 @@ view (to: string, methodName: string, args: object, network: string)
 
 [Live Example - NEAR Testnet, Sepolia, Bitcoin Testnet](https://test.near.social/md1.testnet/widget/chainsig-sign-eth-tx)
 
-[A frontend example you can run locally](https://github.com/gagdiez/near-multichain)
+[A frontend example you can run locally](https://github.com/near-examples/near-multichain)
 
 ### Docs
 
