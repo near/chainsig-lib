@@ -15,6 +15,27 @@ If you would like to contribute a new chain to this library please:
 
 Currently, this can be implemented for any ECDSA-based chain.
 
+# Installation and Tests (WIP)
+
+`yarn && yarn test`
+
+Ethereum is currently scaffolded based on https://github.com/near-examples/chainsig-script.
+
+There are tests `yarn test` that include up to getting an ethereum balance.
+
+In order to proceed with an ethereum transaction (and test) you will have to add the following environment variables.
+
+### CREATE .env FILE in root of project
+
+```
+NEAR_ACCOUNT_ID="[NEAR_TESTNET_ACCOUNT]"
+NEAR_PRIVATE_KEY="[NEAR_ACCOUNT_PRIVATE_KEY]"
+MPC_PATH="[MPC_PATH]"
+MPC_CHAIN="[ethereum|bitcoin]"
+MPC_CONTRACT_ID="multichain-testnet-2.testnet"
+MPC_PUBLIC_KEY="secp256k1:4HFcTSodRLVCGNVcGc4Mf2fwBBBxv9jxkGdiW2S2CA1y6UpVVRWKj6RX7d7TDt65k2Bj3w9FU4BGtt43ZvuhCnNt"
+```
+
 # Overview
 
 NEAR's Chain Signatures protocol allows any NEAR account to sign transactions for any chain. The signing step is a method call with signature:
