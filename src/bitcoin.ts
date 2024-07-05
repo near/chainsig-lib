@@ -52,7 +52,7 @@ export const bitcoin = {
   send: async ({
     from: address,
     publicKey,
-    to = 'mkB9PV9YcKiLNbf3v8h1TRo863WDAdUkJn',
+    to,
     amount = '1',
     path
   }) => {
