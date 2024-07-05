@@ -1,6 +1,6 @@
 import test from 'ava';
 import * as dotenv from 'dotenv';
-import { near, ethereum } from '../dist/lib.js';
+import { near, ethereum, bitcoin } from '../dist/lib.js';
 
 dotenv.config();
 
@@ -25,5 +25,21 @@ test('ethereum balance', async (t) => {
   const { address } = await ethereum.getAddress();
   const balance = await ethereum.getBalance({ address });
   console.log('ethereum balance (gwei):', balance.toString());
+  t.true(!!balance);
+});
+
+test('bitcoin init', async (t) => {
+  const { path } = bitcoin.init();
+  t.true(path === 'bitcoin,1');
+});
+
+test('bitcoin address', async (t) => {
+  const { address } = await bitcoin.getAddress();
+  t.true(!!address);
+});
+
+test('bitcoin balance', async (t) => {
+  const { address } = await bitcoin.getAddress();
+  const balance = await bitcoin.getBalance({ address });
   t.true(!!balance);
 });
