@@ -1,5 +1,14 @@
 ### ⚠️⚠️⚠️ Caution! This is beta / testnet technology ⚠️⚠️⚠️
 
+# DEPRECATED
+
+Please see the following repos for Chain Signatures libraries and examples:
+
+-   https://github.com/near/multichain-tools (JS tools)
+-   https://github.com/EdsonAlcala/omni-transaction-rs (Rust rools)
+-   https://github.com/near-examples/chainsig-script (JS CLI and examples)
+-   https://github.com/mattlockyer/near-trade-signatures (JS multi-chain wallet signing and transaction broadcasting)
+
 # Goals
 
 1. Developers will be able to create transactions for different chains using the same high level API methods.
@@ -9,9 +18,9 @@
 
 If you would like to contribute a new chain to this library please:
 
-- Create a new folder titled the chain name for example "Ethereum" in the chains folder.
-- Implement all methods as defined in this README.
-- Follow the Ethereum example.
+-   Create a new folder titled the chain name for example "Ethereum" in the chains folder.
+-   Implement all methods as defined in this README.
+-   Follow the Ethereum example.
 
 Currently, this can be implemented for any ECDSA-based chain.
 
@@ -213,8 +222,8 @@ view (to: string, methodName: string, args: object, network: string)
 
 ### Additional chain specific methods (future work):
 
-- Cosmos - IBC
-- Dfinity - Canisters
+-   Cosmos - IBC
+-   Dfinity - Canisters
 
 # References & Useful Links
 
